@@ -1,19 +1,20 @@
 namespace ConsoleApp1.Models;
 
-public class Teacher(string name, string surname, string subject) : Person(name, surname, 5)
+public class Teacher : Person
 {
-    private string _subject = subject;
-
+    private string _subject;
     public string Subject
     {
         get => _subject;
         set
         {
-            if (string.IsNullOrEmpty(value))
-            {
-                throw new ArgumentNullException(nameof(Subject), "Subject cannot be null or empty");
-            }
+            IsStringValid(value);
             _subject = value;
         }
+    }
+
+    public Teacher(string name, string surname, string subject) : base(name, surname, 5)
+    {
+        Subject = subject;
     }
 }
