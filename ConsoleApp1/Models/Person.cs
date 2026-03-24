@@ -1,17 +1,23 @@
+using ConsoleApp1.Services;
+
 namespace ConsoleApp1.Models;
 
-public abstract class Person
+public abstract class Person : IReservation
 {
+    public ICollection<Person> Persons { get; } = new List<Person>();
+    
     private static int _mainId = 1;
     public int Id { get; } = _mainId++;
+    
+    private ICollection<Reservation> _reservations = new List<Reservation>();
 
-    private int _currentResercation;
-    public int CurrentReservation
+    private int _currentReservations;
+    public int CurrentReservations
     {
-        get => _currentResercation;
+        get => _currentReservations;
         private set
         {
-            _currentResercation = value;
+            _currentReservations = value;
         }
     }
 
@@ -54,11 +60,22 @@ public abstract class Person
         }
     }
 
-    public Person(string name, string surname, int maxReservations)
+    protected Person(string name, string surname, int maxReservations)
     {
         Name = name;
         Surname = surname;
         MaxReservations = maxReservations;
+        Persons.Add(this);
+    }
+
+    public void AddReservation(Reservation reservation)
+    {
+        _reservations.Add(reservation);
+    }
+
+    public void RemoveReservation(Reservation reservation)
+    {
+        _reservations.Remove(reservation);
     }
 
     protected void IsStringValid(string s)
