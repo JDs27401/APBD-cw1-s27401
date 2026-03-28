@@ -10,7 +10,7 @@ public abstract class DeviceBase : IReservation
     private static int _mainId = 1;
     public string Id { get; } = "ID" + _mainId++;
     
-    public Status Status { get; set; }
+    public DeviceStatus DeviceStatus { get; set; }
 
     private Reservation? _reservation;
     public Reservation Reservation

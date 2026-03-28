@@ -1,6 +1,6 @@
 ﻿namespace ConsoleApp1.Enums;
 
-public enum Status
+public enum DeviceStatus
 {
     Available,
     Unavailable,
