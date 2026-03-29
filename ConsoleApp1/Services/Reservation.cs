@@ -87,5 +87,4 @@ public class Reservation
         reservation.Status = ReservationStatus.Finished;
         reservation.Owner.CurrentReservations = reservation.Owner.CurrentReservations--;
     }
-    //@todo think about reverse associations whether these are needed or not
 }

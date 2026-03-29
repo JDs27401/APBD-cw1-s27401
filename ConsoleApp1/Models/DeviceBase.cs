@@ -10,6 +10,19 @@ public abstract class DeviceBase : IReservation
     private static int _mainId = 1;
     public string Id { get; } = "ID" + _mainId++;
     
+    private string _name;
+    public string Name
+    {
+        get => _name;
+        set
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentException("Name cannot be null or empty");
+            }
+            _name = value;
+        }
+    }
     public DeviceStatus DeviceStatus { get; set; }
 
     private Reservation? _reservation;
@@ -25,6 +38,11 @@ public abstract class DeviceBase : IReservation
             }
             _reservation = value;
         }
+    }
+
+    protected DeviceBase(string name)
+    {
+        Name = name;
     }
 
     public void AddReservation(Reservation reservation)
