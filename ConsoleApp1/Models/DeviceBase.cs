@@ -34,7 +34,6 @@ public abstract class DeviceBase : IReservation
             if (_reservation != null)
             {
                 throw new Exception("The reservation has already been assigned.");
-                //@todo implement own Exception
             }
             _reservation = value;
         }

@@ -87,4 +87,6 @@ public class Reservation
         reservation.Status = ReservationStatus.Finished;
         reservation.Owner.CurrentReservations = reservation.Owner.CurrentReservations--;
     }
+    
+    //@todo implement method showing all active reservations
 }
