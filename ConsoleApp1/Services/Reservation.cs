@@ -1,4 +1,5 @@
-﻿using ConsoleApp1.Enums;
+﻿using System.Runtime.CompilerServices;
+using ConsoleApp1.Enums;
 using ConsoleApp1.Models;
 
 namespace ConsoleApp1.Services;
@@ -10,26 +11,29 @@ public class Reservation
     public string Id { get; } = "R" + _mainId++;
     
     public ICollection<DeviceBase> Devices { get; } = new List<DeviceBase>();
-    public Person? Owner { get; }
+    public Person Owner { get; }
     public ReservationStatus Status { get; set; }
     public DateTime ReservationDate { get; }
     public DateTime ReservationEndDate { get; }
+    public float Penalty { get; private set; } = 0f;
 
     private Reservation(Person person, DeviceBase[] devices, DateTime reservationDate, DateTime reservationEndDate)
     {
         Owner = person;
+        Owner.CurrentReservations = Owner.CurrentReservations++;
         foreach (DeviceBase device in devices)
         {
             Devices.Add(device);
+            device.DeviceStatus = DeviceStatus.Unavailable;
         }
         ReservationDate = reservationDate;
         ReservationEndDate = reservationEndDate;
         Status = ReservationStatus.Ongoing;
+        
         Reservations.Add(Id, this);
     }
-
-
-    public void CreateReservation(Person person, DeviceBase[] devices, DateTime reservationDate, DateTime reservationEndDate)
+    
+    public static void CreateReservation(Person person, DeviceBase[] devices, DateTime reservationDate, DateTime reservationEndDate)
     {
         if (person.CurrentReservations >= person.MaxReservations)
         {
@@ -56,5 +60,28 @@ public class Reservation
         
         Reservation temp = new Reservation(person, devices, reservationDate, reservationEndDate);
     }
-    //@todo implement functions for resolving reservation
+
+    public static void EndReservation(string id, DateTime returnDate)
+    {
+        if (!Reservations.ContainsKey(id))
+        {
+            throw new ReservationNotFoundException("Reservation with not found}");
+        }
+        
+        Reservation reservation = Reservations[id];
+
+        if (returnDate.Day > reservation.ReservationEndDate.Day)
+        {
+            reservation.Penalty = (reservation.ReservationEndDate - returnDate).Days * 10;
+        }
+        
+        foreach (var device in reservation.Devices)
+        {
+            device.DeviceStatus = DeviceStatus.Available;
+        }
+        
+        reservation.Status = ReservationStatus.Finished;
+        reservation.Owner.CurrentReservations = reservation.Owner.CurrentReservations--;
+    }
+    //@todo think about reverse associations whether these are needed or not
 }

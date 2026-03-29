@@ -15,7 +15,7 @@ public abstract class Person : IReservation
     public int CurrentReservations
     {
         get => _currentReservations;
-        private set
+        set
         {
             _currentReservations = value;
         }
