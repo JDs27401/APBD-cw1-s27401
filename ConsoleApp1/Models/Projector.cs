@@ -2,8 +2,8 @@
 
 public class Projector : DeviceBase
 {
-    private float _throwingDistance;
-    public float ThrowingDistance
+    private double _throwingDistance;
+    public double ThrowingDistance
     {
         get => _throwingDistance;
         set
@@ -16,9 +16,9 @@ public class Projector : DeviceBase
         }
     }
 
-    private float _brightness;
+    private double _brightness;
 
-    public float Brightness
+    public double Brightness
     {
         get => _brightness;
         set
@@ -31,7 +31,7 @@ public class Projector : DeviceBase
         }
     }
 
-    public Projector(float throwingDistance, float brightness, string name) : base(name)
+    public Projector(double throwingDistance, double brightness, string name) : base(name)
     {
         ThrowingDistance = throwingDistance;
         Brightness = brightness;

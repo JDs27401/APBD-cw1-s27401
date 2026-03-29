@@ -2,8 +2,8 @@
 
 public class Laptop : DeviceBase
 {
-    private float _batterySize;
-    public float BatterySize
+    private double _batterySize;
+    public double BatterySize
     {
         get => _batterySize;
         set
@@ -16,8 +16,8 @@ public class Laptop : DeviceBase
         }
     }
 
-    private float _screenSize;
-    public float ScreenSize
+    private double _screenSize;
+    public double ScreenSize
     {
         get => _screenSize;
         set
@@ -30,7 +30,7 @@ public class Laptop : DeviceBase
         }
     }
 
-    public Laptop(float batterySize, float screenSize, string name) : base(name)
+    public Laptop(double batterySize, double screenSize, string name) : base(name)
     {
         BatterySize = batterySize;
         ScreenSize = screenSize;
