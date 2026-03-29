@@ -11,7 +11,7 @@ public class Reservation
     public string Id { get; } = "R" + _mainId++;
     
     public ICollection<DeviceBase> Devices { get; } = new List<DeviceBase>();
-    public Person Owner { get; }
+    public Person? Owner { get; }
     public ReservationStatus Status { get; set; }
     public DateTime ReservationDate { get; }
     public DateTime ReservationEndDate { get; }
@@ -20,10 +20,12 @@ public class Reservation
     private Reservation(Person person, DeviceBase[] devices, DateTime reservationDate, DateTime reservationEndDate)
     {
         Owner = person;
+        Owner.AddReservation(this);
         Owner.CurrentReservations = Owner.CurrentReservations++;
         foreach (DeviceBase device in devices)
         {
             Devices.Add(device);
+            device.AddReservation(this);
             device.DeviceStatus = DeviceStatus.Unavailable;
         }
         ReservationDate = reservationDate;
@@ -58,7 +60,7 @@ public class Reservation
             }    
         }
         
-        Reservation temp = new Reservation(person, devices, reservationDate, reservationEndDate);
+        new Reservation(person, devices, reservationDate, reservationEndDate);
     }
 
     public static void EndReservation(string id, DateTime returnDate)
@@ -75,8 +77,10 @@ public class Reservation
             reservation.Penalty = (reservation.ReservationEndDate - returnDate).Days * 10;
         }
         
+        reservation.Owner.RemoveReservation(reservation);
         foreach (var device in reservation.Devices)
         {
+            device.RemoveReservation(reservation);
             device.DeviceStatus = DeviceStatus.Available;
         }
         
