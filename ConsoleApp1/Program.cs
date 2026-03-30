@@ -39,3 +39,7 @@ RaportGenerator.GenerateRaport();
 
 Reservation.EndReservation("R3", new DateTime(2026,03,31));
 RaportGenerator.GenerateRaport();
+
+// Reservation.CreateReservation(s1, dlist, new DateTime(2026,03,28), new DateTime(2026,03,29));
+// Reservation.EndReservation("R3", new DateTime(2026,03,31));
+// Console.WriteLine(Reservation.Reservations["R3"].Penalty); //zakładając powyższe dane, wartości będzie wynosić 20

@@ -76,12 +76,17 @@ public class Reservation
         {
             throw new ReservationNotFoundException("Reservation with not found}");
         }
+
+        if (Reservations[id].Status == ReservationStatus.Finished)
+        {
+            throw new Exception("Reservation already finished");
+        }
         
         Reservation reservation = Reservations[id];
 
         if (returnDate.Day > reservation.ReservationEndDate.Day)
         {
-            reservation.Penalty = (reservation.ReservationEndDate - returnDate).Days * 10;
+            reservation.Penalty = (returnDate - reservation.ReservationEndDate).Days * 10;
         }
         
         reservation.Owner.RemoveReservation(reservation);
