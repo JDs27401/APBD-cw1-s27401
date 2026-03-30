@@ -1,3 +1,5 @@
+using ConsoleApp1.Enums;
+
 namespace ConsoleApp1.Models;
 
 public class Teacher : Person
@@ -15,6 +17,7 @@ public class Teacher : Person
 
     public Teacher(string name, string surname, string subject) : base(name, surname, 5)
     {
+        userType = UserType.Teacher;
         Subject = subject;
     }
 }

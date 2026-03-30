@@ -5,7 +5,7 @@ namespace ConsoleApp1.Models;
 
 public abstract class DeviceBase : IReservation
 {
-    public ICollection<DeviceBase> Devices { get; } = new List<DeviceBase>();
+    public static ICollection<DeviceBase> Devices { get; } = new List<DeviceBase>();
     
     private static int _mainId = 1;
     public string Id { get; } = "ID" + _mainId++;
@@ -42,6 +42,7 @@ public abstract class DeviceBase : IReservation
     protected DeviceBase(string name)
     {
         Name = name;
+        Devices.Add(this);
     }
 
     public void AddReservation(Reservation reservation)

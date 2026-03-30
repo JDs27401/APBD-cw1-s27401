@@ -12,6 +12,9 @@ public class Reservation
     
     public ICollection<DeviceBase> Devices { get; } = new List<DeviceBase>();
     public Person? Owner { get; }
+    
+    public string Name { get; private set; }
+    public string Surname { get; private set; }
     public ReservationStatus Status { get; set; }
     public DateTime ReservationDate { get; }
     public DateTime ReservationEndDate { get; }
@@ -21,7 +24,9 @@ public class Reservation
     {
         Owner = person;
         Owner.AddReservation(this);
-        Owner.CurrentReservations = Owner.CurrentReservations++;
+        Name = person.Name;
+        Surname = person.Surname;
+        Owner.CurrentReservations++;
         foreach (DeviceBase device in devices)
         {
             Devices.Add(device);
@@ -85,8 +90,6 @@ public class Reservation
         }
         
         reservation.Status = ReservationStatus.Finished;
-        reservation.Owner.CurrentReservations = reservation.Owner.CurrentReservations--;
+        reservation.Owner.CurrentReservations--;
     }
-    
-    //@todo implement method showing all active reservations
 }

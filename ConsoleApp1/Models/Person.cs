@@ -1,13 +1,16 @@
+using ConsoleApp1.Enums;
 using ConsoleApp1.Services;
 
 namespace ConsoleApp1.Models;
 
 public abstract class Person : IReservation
 {
-    public ICollection<Person> Persons { get; } = new List<Person>();
+    public static ICollection<Person> Persons { get; } = new List<Person>();
     
     private static int _mainId = 1;
     public int Id { get; } = _mainId++;
+    
+    public UserType userType { get; protected set; }
     
     private ICollection<Reservation> _reservations = new List<Reservation>();
 
