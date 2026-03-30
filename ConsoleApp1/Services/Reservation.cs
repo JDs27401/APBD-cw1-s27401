@@ -11,6 +11,7 @@ public class Reservation
     public string Id { get; } = "R" + _mainId++;
     
     public ICollection<DeviceBase> Devices { get; } = new List<DeviceBase>();
+    public ICollection<string> DeviceIds { get; private set; } = new List<string>();
     public Person? Owner { get; }
     
     public string Name { get; private set; }
@@ -30,6 +31,7 @@ public class Reservation
         foreach (DeviceBase device in devices)
         {
             Devices.Add(device);
+            DeviceIds.Add(device.Id);
             device.AddReservation(this);
             device.DeviceStatus = DeviceStatus.Unavailable;
         }
@@ -88,6 +90,7 @@ public class Reservation
             device.RemoveReservation(reservation);
             device.DeviceStatus = DeviceStatus.Available;
         }
+        reservation.Devices.Clear();
         
         reservation.Status = ReservationStatus.Finished;
         reservation.Owner.CurrentReservations--;

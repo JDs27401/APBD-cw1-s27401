@@ -87,5 +87,10 @@ public abstract class Person : IReservation
         {
             throw new ArgumentNullException();
         }
+
+        if (string.IsNullOrWhiteSpace(s))
+        {
+            throw new ArgumentException();
+        }
     }
 }

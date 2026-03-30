@@ -15,9 +15,9 @@ public class RaportGenerator
         foreach (var reservation in reservations)
         {
             raport += reservation.Key + '\t' + reservation.Value.Status + '\t' + reservation.Value.Name + '\t' + reservation.Value.Surname + '\t';
-            foreach (var device in reservation.Value.Devices)
+            foreach (var id in reservation.Value.DeviceIds)
             {
-                raport += device.Name + '\t';
+                raport += id + '\t';
             }
             raport += "\n";
         }
